@@ -1,15 +1,15 @@
 {
-  "id": "iBiawps3MoACNmtY",
   "name": "Organizador de Emails - Python",
-  "description": "Classificador de e-mails com lógica em JavaScript. Simula 3 e-mails de teste (Financeiro, Suporte, Vendas), aplica regras por palavras-chave e exibe a categoria detectada.",
-  "active": false,
   "nodes": [
     {
       "id": "71f49e5b-2293-442a-926f-00a328c74535",
       "name": "Iniciar",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
-      "position": [240, 300],
+      "position": [
+        240,
+        300
+      ],
       "parameters": {}
     },
     {
@@ -17,7 +17,10 @@
       "name": "Emails Simulados",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [460, 300],
+      "position": [
+        460,
+        300
+      ],
       "parameters": {
         "mode": "runOnceForAllItems",
         "language": "javaScript",
@@ -29,7 +32,10 @@
       "name": "Classificar Email",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [700, 300],
+      "position": [
+        700,
+        300
+      ],
       "parameters": {
         "mode": "runOnceForEachItem",
         "language": "javaScript",
@@ -41,7 +47,10 @@
       "name": "Resultado Final",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
-      "position": [940, 300],
+      "position": [
+        940,
+        300
+      ],
       "parameters": {
         "mode": "manual",
         "includeOtherFields": true,
@@ -60,31 +69,41 @@
   ],
   "connections": {
     "Iniciar": {
-      "main": [[{ "node": "Emails Simulados", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Emails Simulados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Emails Simulados": {
-      "main": [[{ "node": "Classificar Email", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Classificar Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Classificar Email": {
-      "main": [[{ "node": "Resultado Final", "type": "main", "index": 0 }]]
+      "main": [
+        [
+          {
+            "node": "Resultado Final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "nodeGroups": [
-    {
-      "id": "193560ce-d957-4593-8a2b-9aaf1e731863",
-      "name": "Classificação",
-      "description": "Simula e-mails, classifica por categoria e formata o resultado",
-      "nodeNames": ["Emails Simulados", "Classificar Email", "Resultado Final"]
-    }
-  ],
+  "active": false,
   "settings": {
     "executionOrder": "v1"
-  },
-  "meta": {
-    "aiBuilderAssisted": true,
-    "builderVariant": "mcp"
-  },
-  "createdAt": "2026-09-26T23:08:29.679Z",
-  "updatedAt": "2026-09-26T23:08:29.679Z",
-  "versionId": "13a5b419-d1db-4dfc-ae6a-0878983cc950"
+  }
 }
