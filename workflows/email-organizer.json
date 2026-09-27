@@ -1,0 +1,90 @@
+{
+  "id": "iBiawps3MoACNmtY",
+  "name": "Organizador de Emails - Python",
+  "description": "Classificador de e-mails com lógica em JavaScript. Simula 3 e-mails de teste (Financeiro, Suporte, Vendas), aplica regras por palavras-chave e exibe a categoria detectada.",
+  "active": false,
+  "nodes": [
+    {
+      "id": "71f49e5b-2293-442a-926f-00a328c74535",
+      "name": "Iniciar",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "parameters": {}
+    },
+    {
+      "id": "3141d063-526a-49f9-867d-dc36b13a65ec",
+      "name": "Emails Simulados",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "return [\n  { json: { id: 1, subject: 'Fatura vencida - R$ 350,00', body: 'Seu boleto está com vencimento urgente. Valor: R$ 350,00. Pague para evitar juros.' } },\n  { json: { id: 2, subject: 'Sistema fora do ar', body: 'Estou com problema no login, o sistema apresenta erro 500 desde ontem.' } },\n  { json: { id: 3, subject: 'Promoção exclusiva para você!', body: 'Aproveite nosso desconto de 50% em todos os planos. Oferta por tempo limitado!' } }\n];"
+      }
+    },
+    {
+      "id": "136b456f-e332-42ba-af8b-ad37b1e2a10e",
+      "name": "Classificar Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [700, 300],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "language": "javaScript",
+        "jsCode": "const RULES = [\n  { category: 'Financeiro', keywords: ['boleto','pagamento','fatura','cobrança','pix','nfe','nota fiscal','débito','crédito','vencimento','invoice'] },\n  { category: 'Suporte', keywords: ['erro','problema','suporte','falha','não funciona','bug','ajuda','help','ticket','incidente'] },\n  { category: 'Vendas', keywords: ['promoção','desconto','compre agora','oferta','grátis','clique aqui','ganhe','propaganda','venda','plano','assine'] }\n];\n\nconst subject = $input.item.json.subject || '';\nconst body = $input.item.json.body || '';\nconst text = (subject + ' ' + body).toLowerCase();\n\nlet categoria = 'Outros';\nfor (const rule of RULES) {\n  if (rule.keywords.some(kw => text.includes(kw))) {\n    categoria = rule.category;\n    break;\n  }\n}\n\nreturn { json: { id: $input.item.json.id, subject, body, categoria } };"
+      }
+    },
+    {
+      "id": "c326300f-26a8-4b53-954d-f78ec364814a",
+      "name": "Resultado Final",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [940, 300],
+      "parameters": {
+        "mode": "manual",
+        "includeOtherFields": true,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "resumo",
+              "name": "resumo",
+              "type": "string",
+              "value": "={{ \"#\" + $json.id + \" | \" + $json.categoria }}"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Iniciar": {
+      "main": [[{ "node": "Emails Simulados", "type": "main", "index": 0 }]]
+    },
+    "Emails Simulados": {
+      "main": [[{ "node": "Classificar Email", "type": "main", "index": 0 }]]
+    },
+    "Classificar Email": {
+      "main": [[{ "node": "Resultado Final", "type": "main", "index": 0 }]]
+    }
+  },
+  "nodeGroups": [
+    {
+      "id": "193560ce-d957-4593-8a2b-9aaf1e731863",
+      "name": "Classificação",
+      "description": "Simula e-mails, classifica por categoria e formata o resultado",
+      "nodeNames": ["Emails Simulados", "Classificar Email", "Resultado Final"]
+    }
+  ],
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp"
+  },
+  "createdAt": "2026-09-26T23:08:29.679Z",
+  "updatedAt": "2026-09-26T23:08:29.679Z",
+  "versionId": "13a5b419-d1db-4dfc-ae6a-0878983cc950"
+}
