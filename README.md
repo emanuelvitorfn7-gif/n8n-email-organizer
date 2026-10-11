@@ -1,131 +1,131 @@
-# 📧 Organizador Automático de E-mails
+# 📧 Automatic Email Organizer
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![n8n](https://img.shields.io/badge/n8n-Automation-EA4B71?style=for-the-badge&logo=n8n&logoColor=white)
-![Git](https://img.shields.io/badge/Git-Versionamento-F05032?style=for-the-badge&logo=git&logoColor=white)
+![Git](https://img.shields.io/badge/Git-Version_Control-F05032?style=for-the-badge&logo=git&logoColor=white)
 
-Sistema de automação desenvolvido com **Python, JavaScript e n8n** para classificar e-mails automaticamente com base no assunto e no conteúdo da mensagem.
+An automation system developed using **Python, JavaScript, and n8n** to automatically classify emails based on their subject lines and message content.
 
-O projeto demonstra conceitos de **automação de workflows, manipulação de JSON, classificação baseada em regras e integração entre Python e n8n**, sem depender de APIs externas ou serviços pagos.
-
----
-
-## 🎯 Problema que resolve
-
-Caixas de entrada com muitos e-mails podem dificultar a identificação rápida de mensagens importantes.
-
-Este projeto automatiza parte desse processo, analisando o conteúdo de cada mensagem e classificando o e-mail em uma das seguintes categorias:
-
-- 💰 Financeiro
-- 🛠️ Suporte
-- 🛒 Vendas
-- 📁 Outros
-
-A classificação é realizada por meio de palavras-chave previamente definidas.
+This project demonstrates concepts such as **workflow automation, JSON processing, rule-based classification, and integration between Python and n8n**, without relying on external APIs or paid services.
 
 ---
 
-## ⚙️ Como funciona
+## 🎯 Problem It Solves
+
+Managing an inbox with a large number of emails can make it difficult to quickly identify important messages.
+
+This project automates part of that process by analyzing each message and classifying it into one of the following categories:
+
+- 💰 Finance
+- 🛠️ Support
+- 🛒 Sales
+- 📁 Other
+
+Classification is performed using predefined keywords.
+
+---
+
+## ⚙️ How It Works
 
 ```text
-Trigger Manual
+Manual Trigger
       │
       ▼
-Emails Simulados
+Simulated Emails
       │
       ▼
-Classificar Email
+Email Classification
       │
       ▼
-Resultado Final
+Final Result
 ```
 
-### Etapas do workflow
+### Workflow Steps
 
-**1. Trigger Manual**
+**1. Manual Trigger**
 
-Inicia o workflow diretamente pelo painel do n8n.
+Starts the workflow directly from the n8n interface.
 
-**2. Emails Simulados**
+**2. Simulated Emails**
 
-Gera mensagens de exemplo para validar o comportamento do classificador sem depender de uma conta Gmail real.
+Generates sample messages to validate the classifier without requiring a real Gmail account.
 
-**3. Classificar Email**
+**3. Email Classification**
 
-Analisa o assunto e o corpo da mensagem e procura palavras-chave correspondentes às categorias configuradas.
+Analyzes the subject line and message body, searching for keywords that match the configured categories.
 
-**4. Resultado Final**
+**4. Final Result**
 
-Retorna os e-mails classificados em um formato simples e legível.
+Returns the classified emails in a simple, readable format.
 
 ---
 
-## 🧠 Arquitetura do projeto
+## 🧠 Project Architecture
 
-O projeto possui duas implementações da mesma regra de negócio.
+The project includes two implementations of the same business logic.
 
 ### Python
 
-O arquivo:
+The file:
 
 ```text
 python/classifier.py
 ```
 
-funciona como um classificador independente.
+works as a standalone email classifier.
 
-Ele:
+It:
 
-1. recebe um JSON pelo `STDIN`;
-2. lê o assunto e o corpo do e-mail;
-3. aplica as regras de classificação;
-4. retorna o resultado em JSON pelo `STDOUT`.
+1. Receives JSON input through `STDIN`.
+2. Reads the email subject and body.
+3. Applies the classification rules.
+4. Returns the result as JSON through `STDOUT`.
 
 ### n8n
 
-O arquivo:
+The file:
 
 ```text
 workflows/email-organizer.json
 ```
 
-contém o workflow exportado do n8n.
+contains the exported n8n workflow.
 
-A lógica de classificação foi implementada em JavaScript dentro dos nós `Code`, permitindo que todo o fluxo seja executado diretamente no n8n.
+The classification logic is implemented in JavaScript inside n8n `Code` nodes, allowing the entire workflow to run directly within n8n.
 
-### Fluxo conceitual
+### Conceptual Workflow
 
 ```text
-E-mail
+Email
   ↓
-Extração dos dados
+Data Extraction
   ↓
-Análise do assunto e corpo
+Subject and Body Analysis
   ↓
-Busca por palavras-chave
+Keyword Matching
   ↓
-Classificação
+Classification
   ↓
-Resultado
+Result
 ```
 
 ---
 
-## 🛠️ Tecnologias utilizadas
+## 🛠️ Technologies Used
 
-| Tecnologia | Utilização |
+| Technology | Purpose |
 |---|---|
-| Python 3.8+ | Classificador independente |
-| JavaScript | Lógica executada dentro do n8n |
-| n8n | Orquestração do workflow |
-| JSON | Entrada e saída dos dados |
-| Git | Controle de versão |
-| GitHub | Hospedagem e documentação do projeto |
+| Python 3.8+ | Standalone email classifier |
+| JavaScript | Classification logic executed within n8n |
+| n8n | Workflow orchestration |
+| JSON | Input and output data format |
+| Git | Version control |
+| GitHub | Project hosting and documentation |
 
 ---
 
-## 📂 Estrutura do projeto
+## 📂 Project Structure
 
 ```text
 n8n-email-organizer/
@@ -152,34 +152,36 @@ n8n-email-organizer/
 
 ---
 
-## 🏷️ Categorias de classificação
+## 🏷️ Classification Categories
 
-| Categoria | Exemplos de palavras-chave |
+| Category | Example Keywords |
 |---|---|
-| **Financeiro** | boleto, fatura, pagamento, pix, nfe, débito, vencimento |
-| **Suporte** | erro, bug, falha, ticket, problema, não funciona |
-| **Vendas** | promoção, desconto, oferta, compre agora, grátis, plano |
-| **Outros** | nenhuma palavra-chave correspondente |
+| **Finance** | boleto, invoice, payment, pix, nfe, debit, due date |
+| **Support** | error, bug, failure, ticket, issue, not working |
+| **Sales** | promotion, discount, offer, buy now, free, plan |
+| **Other** | No matching keywords |
+
+The original Portuguese keywords can be retained in the classification rules to support emails written in Portuguese.
 
 ---
 
-## 💻 Como executar localmente
+## 💻 Running Locally
 
-### Pré-requisitos
+### Prerequisites
 
-É necessário ter:
+You need:
 
 ```text
-Python 3.8 ou superior
+Python 3.8 or higher
 ```
 
-O classificador utiliza apenas bibliotecas padrão do Python.
+The classifier uses only Python's standard library.
 
-Não é necessário instalar dependências externas.
+No external dependencies are required.
 
 ---
 
-## 🐍 Executando o classificador Python
+## 🐍 Running the Python Classifier
 
 ### Windows PowerShell
 
@@ -195,27 +197,27 @@ echo '{"subject": "Boleto vencendo amanhã", "body": "Valor: R$ 350,00. Pagament
 
 ---
 
-## 🧪 Testando com os exemplos
+## 🧪 Testing with Sample Files
 
-### Financeiro
+### Finance
 
 ```powershell
 Get-Content examples/input_financeiro.json | python python/classifier.py
 ```
 
-### Suporte
+### Support
 
 ```powershell
 Get-Content examples/input_suporte.json | python python/classifier.py
 ```
 
-### Vendas
+### Sales
 
 ```powershell
 Get-Content examples/input_vendas.json | python python/classifier.py
 ```
 
-### Outros
+### Other
 
 ```powershell
 Get-Content examples/input_outros.json | python python/classifier.py
@@ -223,26 +225,26 @@ Get-Content examples/input_outros.json | python python/classifier.py
 
 ---
 
-## 📥 Como importar o workflow no n8n
+## 📥 Importing the Workflow into n8n
 
-1. Abra sua instância do **n8n**.
-2. Acesse a área de **Workflows**.
-3. Escolha a opção **Import from File**.
-4. Selecione:
+1. Open your **n8n** instance.
+2. Navigate to the **Workflows** section.
+3. Select **Import from File**.
+4. Choose the following file:
 
 ```text
 workflows/email-organizer.json
 ```
 
-5. Abra o workflow.
-6. Clique em **Execute Workflow**.
-7. Os e-mails simulados serão processados automaticamente.
+5. Open the imported workflow.
+6. Click **Execute Workflow**.
+7. The simulated emails will be processed and classified automatically.
 
 ---
 
-## 📊 Exemplo de funcionamento
+## 📊 Example
 
-### Entrada
+### Input
 
 ```json
 {
@@ -251,7 +253,7 @@ workflows/email-organizer.json
 }
 ```
 
-### Saída
+### Output
 
 ```json
 {
@@ -259,142 +261,148 @@ workflows/email-organizer.json
 }
 ```
 
+The JSON field names and category values are kept in Portuguese to match the original classifier implementation.
+
 ---
 
-## 📋 Exemplo de resultado no n8n
+## 📋 Example n8n Output
 
 ```text
-#1 | Financeiro
-#2 | Suporte
-#3 | Vendas
-#4 | Outros
+#1 | Finance
+#2 | Support
+#3 | Sales
+#4 | Other
 ```
 
 ---
 
-## 🖼️ Workflow
+## 🖼️ Workflow Screenshot
 
-Adicione uma captura do seu workflow dentro da pasta:
+Add a screenshot of your workflow to the following directory:
 
 ```text
 screenshots/
 ```
 
-Depois utilize:
+Then include this Markdown reference in your README:
 
 ```markdown
-![Workflow n8n](screenshots/workflow-n8n.png)
+![n8n Workflow](screenshots/workflow-n8n.png)
 ```
 
-O resultado aparecerá diretamente no README.
+The screenshot will be displayed directly in the GitHub README.
 
 ---
 
-## 💡 Decisões técnicas
+## 💡 Technical Decisions
 
-A classificação foi desenvolvida inicialmente utilizando **palavras-chave**.
+The classification system was initially developed using a **keyword-based approach**.
 
-Essa abordagem foi escolhida porque permite:
+This approach was chosen because it provides:
 
-- execução rápida;
-- funcionamento offline;
-- ausência de custos com APIs;
-- facilidade de manutenção;
-- facilidade para adicionar novas categorias;
-- entendimento simples da lógica utilizada.
+- Fast execution.
+- Offline functionality.
+- No external API costs.
+- Easy maintenance.
+- Simple integration of new categories.
+- Clear and understandable classification logic.
 
-A arquitetura também permite substituir futuramente o sistema baseado em palavras-chave por um modelo de inteligência artificial ou outro mecanismo de classificação.
+The architecture also makes it possible to replace the keyword-based system with an artificial intelligence model or another classification mechanism in the future.
 
 ---
 
-## 📚 Conceitos aplicados
+## 📚 Concepts Applied
 
-Durante o desenvolvimento deste projeto foram utilizados conceitos de:
+The development of this project involved several programming and automation concepts:
 
-- Automação de workflows
-- Programação em Python
+- Workflow Automation
+- Python Programming
 - JavaScript
-- Manipulação de JSON
-- STDIN e STDOUT
-- Estruturas condicionais
-- Classificação baseada em regras
-- Integração entre tecnologias
-- Organização de projetos
+- JSON Processing
+- STDIN and STDOUT
+- Conditional Statements
+- Rule-Based Classification
+- Technology Integration
+- Project Organization
 - Git
 - GitHub
 - n8n
-- Versionamento de código
+- Version Control
 
 ---
 
 ## 🚀 Roadmap
 
-- [x] Criar classificador baseado em palavras-chave
-- [x] Implementar classificador em Python
-- [x] Criar workflow no n8n
-- [x] Implementar lógica em JavaScript
-- [x] Criar arquivos JSON para testes
-- [x] Exportar workflow para o GitHub
-- [ ] Conectar o workflow ao Gmail
-- [ ] Criar labels automaticamente
-- [ ] Mover e-mails para categorias específicas
-- [ ] Adicionar histórico das classificações
-- [ ] Criar dashboard de e-mails classificados
-- [ ] Implementar testes automatizados
-- [ ] Dockerizar o projeto
-- [ ] Adicionar classificação utilizando IA
+- [x] Develop a keyword-based classifier.
+- [x] Implement the classifier in Python.
+- [x] Create an n8n workflow.
+- [x] Implement the classification logic in JavaScript.
+- [x] Create JSON files for testing.
+- [x] Export the workflow to GitHub.
+- [ ] Connect the workflow to Gmail.
+- [ ] Automatically create Gmail labels.
+- [ ] Organize emails into specific categories.
+- [ ] Add classification history.
+- [ ] Build an email classification dashboard.
+- [ ] Implement automated tests.
+- [ ] Dockerize the project.
+- [ ] Integrate AI-powered email classification.
 
 ---
 
-## 🔮 Próximas evoluções
+## 🔮 Future Improvements
 
-Uma evolução natural do projeto será substituir os e-mails simulados por mensagens reais provenientes do Gmail.
+A natural next step is to replace simulated emails with real messages retrieved from Gmail.
 
-O fluxo poderá seguir a arquitetura:
+The future workflow could follow this architecture:
 
 ```text
 Gmail Trigger
       ↓
-Novo e-mail
+New Email
       ↓
-Extração do assunto e corpo
+Subject and Body Extraction
       ↓
-Classificação
+Email Classification
       ↓
-Criação / aplicação de Label
+Label Creation / Assignment
       ↓
-Organização automática da caixa de entrada
+Automatic Inbox Organization
 ```
 
-Também será possível integrar modelos de inteligência artificial para analisar o contexto completo das mensagens, tornando a classificação mais flexível do que uma abordagem baseada apenas em palavras-chave.
+It will also be possible to integrate artificial intelligence models to analyze the full context of incoming messages, making classification more flexible and accurate than a system based solely on predefined keywords.
 
 ---
 
-## 🔒 Segurança
+## 🔒 Security
 
-Arquivos contendo informações sensíveis, credenciais ou variáveis de ambiente não devem ser enviados para o repositório.
+Files containing sensitive information, credentials, or environment variables should never be committed to the repository.
 
-Exemplo:
+For example:
 
 ```text
 .env
 .env.*
 ```
 
-Esses arquivos devem permanecer configurados no `.gitignore`.
+These files should be excluded using `.gitignore`.
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
 **Emanuel Vítor Fernandes Nascimento**
 
-Desenvolvedor Back-End | Automação
+Back-End Developer | Automation
 
 [LinkedIn](https://www.linkedin.com/in/emanuel-vitor-fernandes-6a3796421) • [GitHub](https://github.com/emanuelvitorfn7-gif)
 
 ---
 
-## ⭐ Sobre o projeto
+## ⭐ About the Project
 
-Este projeto foi desenvolvido como parte do meu aprendizado prático em **desenvolvimento Back-End e automação**, utilizando Python, JavaScript e n8n para construir uma solução simples, funcional e expansível.
+This project was developed as part of my hands-on learning experience in **Back-End Development and Workflow Automation**.
+
+By combining Python, JavaScript, and n8n, I built a practical email classification system focused on simplicity, maintainability, and future scalability.
+
+The project allowed me to strengthen my understanding of **business logic, data processing, workflow orchestration, and integration between different technologies**, while exploring how automation can simplify repetitive tasks.
